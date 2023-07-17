@@ -9,39 +9,20 @@ export const useShopingCart = () => {
 
   const onProductCountChange = ({ count, product }: OnChangeArgs) => {
     setShopingCart((oldShopingCart) => {
-      //si el producto viene null, lo creo
-      const productInCart: ProductInCart = oldShopingCart[product.id] || {
-        ...product,
-        count: 0,
-      };
-
-      //si el count es diferente de cero o negativo, cambia el count
-      if (Math.max(productInCart.count + count, 0) > 0) {
-        productInCart.count += count;
+      //primera implementacion
+      if (count === 0) {
+        //desestructuro el estado previo del shoping card y remuevo
+        //solo el id del objeto que tiene el counter en 0
+        const { [product.id]: toDelete, ...rest } = oldShopingCart;
+        return rest;
+      } else {
+        //mantengo el estado previo del shoping cart y le añado
+        //el id y objeto del nuevo estado
         return {
           ...oldShopingCart,
-          [product.id]: productInCart,
+          [product.id]: { ...product, count },
         };
       }
-
-      //sino borralo
-      const { [product.id]: toDelete, ...rest } = oldShopingCart;
-      return rest;
-
-      //primera implementacion
-      // if (count === 0) {
-      //   //desestructuro el estado previo del shoping card y remuevo
-      //   //solo el id del objeto que tiene el counter en 0
-      //   const { [product.id]: toDelete, ...rest } = oldShopingCart;
-      //   return rest;
-      // } else {
-      //   //mantengo el estado previo del shoping cart y le añado
-      //   //el id y objeto del nuevo estado
-      //   return {
-      //     ...oldShopingCart,
-      //     [product.id]: { ...product, count },
-      //   };
-      // }
     });
   };
 
