@@ -10,7 +10,7 @@ interface Props {
 export const MySelectCom = ({ label, ...props }: Props) => {
 
   //Este hook retorna propiedades del campo de Formik, como la data el error, etc
-  const [ field, meta ] = useField(props);
+  const [ field ] = useField(props);
 
   return (
     <>
